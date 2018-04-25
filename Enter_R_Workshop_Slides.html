@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Responding to analysis and communication: Data science the R way</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Tatjana Kecojevic" />
+    <meta name="date" content="2018-04-26" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding/datatables.js"></script>
+    <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
+    <link rel="stylesheet" href="css/ohsu.css" type="text/css" />
+    <link rel="stylesheet" href="css/ohsu-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Responding to analysis and communication: Data science the R way
+## DataTeka
+### Tatjana Kecojevic
+### 26 April 2018
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/c/c1/Rlogo.png)
+???
+
+Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Rlogo.png)
+---
+class: inverse, center, middle
+
+#ENTER
+#R Workshop: part I
+##Tatjana Kecojevic
+##26 April 2018
+---
+class: inverse, center, middle
+
+Go to [https://github.com/TanjaKec/EnterConf_R_Workshop](https://github.com/TanjaKec/EnterConf_R_Workshop) to download the material.
+
+&lt;img src="GitHub1.png" width="500px" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="GitHub2.png" width="400px" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: center, middle
+
+#How do we do it? 🤔
+
+###Steps of a typical data science project:
+&lt;img src="Program_HW.png" width="500px" /&gt;
+---
+class: inverse, center, middle
+
+#Get Started 🤫😴
+&lt;img src="George_Desk.gif" width="600px" /&gt;
+---
+##Before there was R, there was S! 🤠
+
+**R** is a dialect of **S** language that was developed in 1976 by *Rick Becker* and *John Chambers* at the  Bell Laboratories.
+
+*Rick Becker* gave an excellent keynote talk *"Forty Years of S"* at UseR!2016 conference:   
+[Rick Becker @ UseR!2016](http://blog.revolutionanalytics.com/2016/07/rick-becker-s-talk.html) where he talked about development of **S** language that gives explanations for many characteristics of **R** as we know it, including "&lt;-" assignment operator.
+
+1993 Bell Labs gave StatSci (later Insightful Corp.) an exclusive license to develop and sell the **S** language. Insightful sold its implementation of the **S** language under the product name **S-PLUS**.
+
+You can read more about the [history of S, R, and S-PLUS](https://www.whoishostingthis.com/resources/s-plus/)
+---
+## then, R was born 😇🎶
+In early nineties at the University of Aucklandn in the Department of Statistics **R** was created by *Ross Ihaka* and *Robert Gentleman*.
+
+They used [GNU General Public License](http://www.gnu.org/licenses/gpl-2.0.html) to make R open source free software. 
+
+**R**oss Ihaka and **R**obert Gentleman. *R: A language for data analysis and graphics.* Journal of Computational and Graphical Statistics, 5(3):299–314, 1996
+
+Currently **R** is developed by the **R Development Core Team**, of which *John Chambers* is a member.
+---
+##Write R Code
+
+To start using **R** you need to:
+
+1) Install [R](https://cran.r-project.org/) [(and RStudio)](https://www.rstudio.com/products/rstudio/download/#download)
+
+2) Launch it and set your working directory: letting R know where to find all of your files.
+
+3) Start writing **R** code!
+
+**Tip**💡:
+- When start working on a new R code/R Project in [RStudio IDE](https://support.rstudio.com/hc/en-us/sections/200107586-Using-the-RStudio-IDE) use 
+***File -&gt; New Project*** 
+This way your working directory would be set up when you start a new project and it will save all your files in it. Next time you open your project it would set project's directory as a working directory... It would help you with so much [more](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects). 
+---
+class: center, middle
+
+##[RStudio IDE Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)
+
+&lt;img src="RStudio.png" width="500px" /&gt;
+
+***Top Left:*** Code Editor;
+--
+
+***Bottom Left:*** R Console;
+--
+
+***Top Right:*** Environment
+--
+
+***Bottom Right:*** Plots and Files
+---
+##Dataset
+
+**gapminder** dataset available from **gapminder** package.
+For each of 142 countries, the package provides values for life expectancy, GDP per capita, and population, every five years, from 1952 to 2007.
+
+<div id="htmlwidget-1ebcf71dd501b22c718a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1ebcf71dd501b22c718a">{"x":{"filter":"none","data":[["1","2","3","4"],["Afghanistan","Afghanistan","Afghanistan","Afghanistan"],["Asia","Asia","Asia","Asia"],[1952,1957,1962,1967],[28.801,30.332,31.997,34.02],[8425333,9240934,10267083,11537966],[779.4453145,820.8530296,853.10071,836.1971382]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>country<\/th>\n      <th>continent<\/th>\n      <th>year<\/th>\n      <th>lifeExp<\/th>\n      <th>pop<\/th>\n      <th>gdpPercap<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+
+Note thet there are 6 columns, each of which we call a **variable**. 
+---
+class: inverse, center, middle
+  
+  # Let's get introduced to some basic statistical concepts 🧐
+---
+##What will I learn in Part I?
+
+During Part I of the workshop you will be introduced to a set of methods that enable data to be explored using `R` with the **objective** 
+- of summarising and understanding the main features of the variables contained within the data and 
+
+- to investigate the nature of any linkages between the variables that may exist.
+
+The starting point is to understand **what data is**.
+- What is the **population**?
+- Why do we use **samples**?
+
+So, from where do I start?
+
+- **Do I understand the problem** under investigation and are the objectives of the investigation clear? *The only way to obtain this information is to ask questions, and keep asking questions until satisfactory answers have been obtained.*
+
+- Do I understand exactly **what each variable is measuring/recording?**
+---
+#Describing Variables
+
+A starting point is to examine the characteristics of each individual variable in the data set. 
+
+The way to proceed depends upon the type of variable being examined.
+
+**Classification of variable types**
+
+The variables can be one of two broad types:
+
+-	Attribute variables 
+
+-	Measured variables
+.pull-left[
+**attribute**
+
+gender
+
+days in a week
+]
+.pull-right[
+**measured**
+
+age
+
+weight
+]
+---
+##The Concept of Statistical Distribution
+
+**The concept of the statistical distribution is central to statistical analysis.**
+
+This concept relates to the population and conceptually assumes that we have perfect information, the exact composition of the population is known. 
+
+.pull-left[
+**attribute:**
+![](Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+**measured:**
+![](Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+---
+class: center, middle
+##Summary Statistics
+
+![](Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+---
+##Investigating relationship between variables
+
+One of the key steps required of the Data Analyst is to investigate the relationship between variables. This requires a further **classification of the variables** contained within the data, as either a &lt;span style="color:darkred"&gt;**response**&lt;/span&gt; variable or an &lt;span style="color:darkred"&gt;**explanatory**&lt;/span&gt; variable.  
+
+A **response** variable is a variable that measures either directly or indirectly the objectives of the analysis.
+
+An **explanatory** variable is a variable that may influence the response variable.
+---
+class: center, middle
+##Bivariate Relationships
+&lt;img src="RelationshipMatrix.png" width="500px" /&gt;
+---
+class: center, middle
+##DA Methodology
+&lt;img src="DaMethodology.png" width="600px" /&gt;
+
+Note that the 'Further Data Analysis' stage may or may-not be required depending on the outcome of the 'Initial Data Analysis' at stage 1. 
+---
+class: center, middle
+##Measured Vs Attribute(2-levels)
+&lt;img src="MvAMethodology.png" width="700px" /&gt;
+---
+class: center, middle
+##Measured Vs Measured
+&lt;img src="MvMMethodology.png" width="700px" /&gt;
+---
+##Further Data Analysis
+
+If the &lt;span style="color:darkblue"&gt;'**Initial Data Analysis**'&lt;/span&gt; is &lt;span style="color:darkblue"&gt;*inconclusive*&lt;/span&gt; then &lt;span style="color:darkblue"&gt;'**Further Data Analysis**'&lt;/span&gt; is required. 
+
+The 'Further Data Analysis' is procedure that enables a decision to be made, based on the sample evidence, as to one of two outcomes:  
+- There is no relationship
+-	There is a relationship
+
+These statistical procedures are called &lt;span style="color:darkred"&gt;**hypothesis tests**&lt;/span&gt;, which essentially &lt;span style="color:darkred"&gt;*provide a decision rule for choosing between one of the two outcomes*&lt;/span&gt;: "There is no relationship" or "There is a relationship" based on the sample evidence.
+
+All hypothesis tests are carried out in four stages:
+- Stage 1:		Specifying the hypotheses.
+
+- Stage 2:		Defining the test parameters and the decision rule.
+
+- Stage 3:		Examining the sample evidence.
+
+- Stage 4:		The conclusions.
+---
+##Statistical Models used in FDA
+
+* Measured Response v Attribute Explanatory Variable with exactly two levels:
+  
+  - t-test
+
+* Measured Response v Attribute Explanatory Variable with more than two levels:
+  
+  - One-Way ANOVA
+  
+* Measures Response v Measured Explanatory Variable
+  
+  - Simple Regression Model
+  
+* Measures Response v Measured Explanatory Variable**s**
+  - Multifactor Regression Model
+
+* Attribute Response v Attribute Explanatory Variable
+  - Chi-Square Test of Independence
+---
+class: inverse, center, middle
+  
+#How do we do it in R? 🤓
+---
+##Before Tidyverse R, there is Base R!
+When you download and install **R** for the first time, you are installing **the Base R** software. **Base R** contains most of the functions you’ll use on a daily basis: `mean()`, `subset()`...
+
+To learn about **R**'s basic operations, data structures and base functions you could look at one of the R-Ladies Manchester's handouts: [Introduction to base R](https://tanjakec.github.io/blog/introduction-to-r/).
+
+If you want to access data and code written by other people, you’ll need to install it as a **package**. An **R package** is a bundle of functions (code), data, documentation, vignettes (examples), stored in one neat place.
+
+"In **R**, the fundamental unit of shareable code is the package." [Hadley Wickham](http://r-pkgs.had.co.nz/intro.html)  
+---
+##The verse! 😇🎶
+An opinionated collection of **R packages** for data science.
+
+[`install.packages("tidyverse")`](https://www.tidyverse.org/)
+
+[`library(tidyverse)`](https://www.tidyverse.org/packages/)
+
+- Have you tried learning data science by reading books? 
+
+📖📘 [**R for Data Science**](http://r4ds.had.co.nz/) by Garrett Grolemund &amp; Hadley Wickham
+
+- Have you tried learning data science by posting your questions and discussing it with other people within the R community?
+
+👥💻📊📈🗣 [**RStudio Community**](https://community.rstudio.com/)
+---
+##The &lt;span style="color:blue"&gt;`dplyr`&lt;/span&gt; Package: 
+provides a “grammar” (the verbs) for data manipulation and for operating on data frames. The **key opertor and the esential verbs** are :
+
+- &lt;span style="color:blue"&gt;`%&gt;%`&lt;/span&gt;: **the “pipe” operator** used to connect multiple verb actions together into a pipeline.
+
+- &lt;span style="color:blue"&gt;`select()`&lt;/span&gt;: return a subset of the columns of a data frame.
+
+- &lt;span style="color:blue"&gt;`mutate()`&lt;/span&gt;: add new variables/columns or transform existing variables.
+
+- &lt;span style="color:blue"&gt;`filter()`&lt;/span&gt;: extract a subset of rows from a data frame based on logical conditions.
+
+- &lt;span style="color:blue"&gt;`arrange()`&lt;/span&gt;: reorder rows of a data frame according to single or multiple variables.
+
+- &lt;span style="color:blue"&gt;`summarise()`&lt;/span&gt; / &lt;span style="color:blue"&gt;`summarize()`&lt;/span&gt;: reduces each group to a single row by calculating aggregate measures. 
+---
+##Gapminder Data
+
+Excerpt of the Gapminder data on life expectancy, GDP per capita, and population by country.
+
+The main data frame gapminder has **1704 rows** and **6 variables**:
+- **country**: factor with 142 levels
+- **continent**: factor with 5 levels
+- **year**: ranges from 1952 to 2007 in increments of 5 years
+- **lifeExp**: life expectancy at birth, in years
+- **pop**: population
+- **gdpPercap**: GDP per capita
+
+
+```r
+gapminder::gapminder[1:3,]
+```
+
+```
+## # A tibble: 3 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+```
+---
+class: center 
+
+##Setting up Working Environment 💡
+
+.pill-left[
+Install necessary packages you will be working with!
+
+
+```r
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
+install.packages("ggplot2", repos = "http://cran.us.r-project.org")
+install.packages("gapminder", repos = "http://cran.us.r-project.org")
+```
+]
+
+--
+Now we're ready to start practicing Elain's Dance!!! 😃🎵🎶
+
+&lt;img src="ElainDanceI.png" width="300px" /&gt;
+---
+## 1st look at the data: &lt;span style="color:blue"&gt;`dim()`&lt;/span&gt; &amp; &lt;span style="color:blue"&gt;`head()`&lt;/span&gt;
+
+
+```r
+library(gapminder)
+dim(gapminder)
+```
+
+```
+## [1] 1704    6
+```
+
+```r
+head(gapminder, n=10)
+```
+
+```
+## # A tibble: 10 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333       779
+##  2 Afghanistan Asia       1957    30.3  9240934       821
+##  3 Afghanistan Asia       1962    32.0 10267083       853
+##  4 Afghanistan Asia       1967    34.0 11537966       836
+##  5 Afghanistan Asia       1972    36.1 13079460       740
+##  6 Afghanistan Asia       1977    38.4 14880372       786
+##  7 Afghanistan Asia       1982    39.9 12881816       978
+##  8 Afghanistan Asia       1987    40.8 13867957       852
+##  9 Afghanistan Asia       1992    41.7 16317921       649
+## 10 Afghanistan Asia       1997    41.8 22227415       635
+```
+---
+##Examine the structure of the data: &lt;span style="color:blue"&gt;`str()`&lt;/span&gt;
+
+```r
+str(gapminder) 
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...
+```
+
+The **output could look messy** and it might not fit the screen when dealing with a big data set that has lots of variables! 🤪
+---
+##Do it in a tidy way: &lt;span style="color:blue"&gt;`glimpse()`&lt;/span&gt;
+
+
+```r
+suppressPackageStartupMessages(library(dplyr))
+glimpse(gapminder) 
+```
+
+```
+## Observations: 1,704
+## Variables: 6
+## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, ...
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia...
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992...
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.8...
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 1488...
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 78...
+```
+---
+##The pipeline operater: &lt;span style="color:blue"&gt;`%&gt;%`&lt;/span&gt;
+&lt;pre&gt;
+**Left Hand Side (LHS)**   &lt;span style="color:blue"&gt;`%&gt;%`&lt;/span&gt;    **Right Hand Side (RHS)**
+&lt;/pre&gt;
+&lt;pre&gt;
+&lt;span style="color:blue"&gt;x %&gt;% f(..., y)&lt;/span&gt; 
+
+&lt;span style="color:blue"&gt;    f(x,y)&lt;/span&gt;
+&lt;/pre&gt;
+
+The "pipe" passes the **result** of the **LHS** as the 1st operator argument of the **function** on the **RHS**
+
+&lt;pre&gt;
+&lt;span style="color:blue"&gt;3 %&gt;% sum(4)&lt;/span&gt;      &lt;==&gt;      &lt;span style="color:blue"&gt;  sum(3, 4)&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;span style="color:blue"&gt;`%&gt;%`&lt;/span&gt; is very practical for chaining together multiple &lt;span style="color:blue"&gt;`dplyr`&lt;/span&gt; functions in a sequence of operations.
+---
+##pick variables by their names: &lt;span style="color:blue"&gt;`select()`&lt;/span&gt;,
+&lt;img src="select().png" width="450px" /&gt;
+
+- &lt;span style="color:blue"&gt;`starts_with("X")`&lt;/span&gt; every name that starts with "X".
+
+- &lt;span style="color:blue"&gt;`ends_with("X")`&lt;/span&gt; every name that ends with "X".
+
+- &lt;span style="color:blue"&gt;`contains("X")`&lt;/span&gt; every name that contains "X".
+
+- &lt;span style="color:blue"&gt;`matches("X")`&lt;/span&gt; every name that matches "X", where "X" can be a regular expression.
+
+- &lt;span style="color:blue"&gt;`num_range("x", 1:5)`&lt;/span&gt;  the variables named x01, x02, x03, x04, x05.
+
+- &lt;span style="color:blue"&gt;`one_of(x)`&lt;/span&gt; =&gt; every name that appears in x, which should be a character vector.
+---
+##Select your variables
+1) that ends with letter `p`
+
+2) starts with letter `o`. Try to do this selection using base R.  
+---
+##Solutions:
+
+```r
+gm_pop_gdp &lt;- select(gapminder, ends_with("p"))
+head(gm_pop_gdp, n = 1)
+```
+
+```
+## # A tibble: 1 x 3
+##   lifeExp     pop gdpPercap
+##     &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1    28.8 8425333       779
+```
+
+```r
+gm_cc &lt;- select(gapminder, starts_with("co"))
+head(gm_cc, n = 1)
+```
+
+```
+## # A tibble: 1 x 2
+##   country     continent
+##   &lt;fct&gt;       &lt;fct&gt;    
+## 1 Afghanistan Asia
+```
+of course all of this could be done using **base R** like for example:
+
+```r
+gm_cc &lt;- gapminder[c("country", "continent")]
+```
+but it's less intuitive and often requires more typing. 
+---
+##Create new variables of existing variables: &lt;span style="color:blue"&gt;`mutate()`&lt;/span&gt;
+&lt;img src="mutate().png" width="400px" /&gt;
+
+It would allow you to add to the data frame `df` a new column, `z`, which is the multiplication of the columns `x` and `y`: `mutate(df, z = x * y)`.
+If we would like to observe `lifeExp` measured in months we could create a new column `lifeExp_month`: 
+
+```r
+gapminder2 &lt;- mutate(gapminder, LifeExp_month = lifeExp * 12) 
+head(gapminder2, n = 2)
+```
+
+```
+## # A tibble: 2 x 7
+##   country     continent  year lifeExp     pop gdpPercap LifeExp_month
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Afghanistan Asia       1952    28.8 8425333       779           346
+## 2 Afghanistan Asia       1957    30.3 9240934       821           364
+```
+---
+##Pick observations by their values: &lt;span style="color:blue"&gt;`filter()`&lt;/span&gt;
+&lt;img src="filter().png" width="450px" /&gt;
+
+There is a set of logical operators in **R** that you can use inside `filter()`:
+
+- `x &lt; y`: `TRUE` if `x` is less than `y`
+- `x &lt;= y`: `TRUE` if `x` is less than or equal to `y`
+- `x == y`: `TRUE` if `x` equals `y`
+- `x != y`: `TRUE` if `x` does not equal `y`
+- `x &gt;= y`: `TRUE` if `x` is greater than or equal to `y`
+- `x &gt; y`: `TRUE` if `x` is greater than `y`
+- `x %in% c(a, b, c)`: `TRUE` if `x` is in the vector `c(a, b, c)`
+- `is.na(x)`:  Is `NA`
+- `!is.na(x)`: Is not `NA`
+---
+##Filter your data:
+
+Use `gapminder2` `df` to filter:
+
+1) only Europian countries and save it as `gapmEU`
+
+2) only Europian countries from 2000 onward and save it as `gapmEU21c`
+
+3) rows where the life expectancy is greater than 80
+
+Don't forget to **use `==` instead of `=`**! and
+Don't forget the quotes ** `""` **
+---
+##Solutions:
+
+```r
+gapmEU &lt;- filter(gapminder2, continent == "Europe") 
+head(gapmEU, 2)
+```
+
+```
+## # A tibble: 2 x 7
+##   country continent  year lifeExp     pop gdpPercap LifeExp_month
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Albania Europe     1952    55.2 1282697      1601           663
+## 2 Albania Europe     1957    59.3 1476505      1942           711
+```
+
+```r
+gapmEU21c &lt;- filter(gapminder2, continent == "Europe" &amp; year &gt;= 2000)
+head(gapmEU21c, 2)
+```
+
+```
+## # A tibble: 2 x 7
+##   country continent  year lifeExp     pop gdpPercap LifeExp_month
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Albania Europe     2002    75.7 3508512      4604           908
+## 2 Albania Europe     2007    76.4 3600523      5937           917
+```
+
+```r
+filter(gapminder2, lifeExp &gt; 80)
+```
+---
+##Reorder the rows: &lt;span style="color:blue"&gt;`arrange()`&lt;/span&gt;
+is used to reorder rows of a **d**ata **f**rame (df) according to one of the variables/columns.
+
+&lt;img src="arrange().png" width="300px" /&gt;
+
+- If you pass `arrange()` a character variable, **R** will rearrange the rows in alphabetical order according to values of the variable. 
+
+- If you pass a factor variable, **R** will rearrange the rows according to the order of the levels in your factor (running `levels()` on the variable reveals this order).
+---
+##Arranging your data
+1) Arrange countries in `gapmEU21c` `df` by life expectancy in ascending and descending order.
+
+2) Using `gapminder df`
+  - Find the records with the smallest population
+  
+  - Find the records with the largest life expectancy.
+---
+##Solution 1):
+
+```r
+gapmEU21c_h2l &lt;- arrange(gapmEU21c, lifeExp)
+head(gapmEU21c_h2l, 2)
+```
+
+```
+## # A tibble: 2 x 7
+##   country continent  year lifeExp      pop gdpPercap LifeExp_month
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Turkey  Europe     2002    70.8 67308928      6508           850
+## 2 Romania Europe     2002    71.3 22404337      7885           856
+```
+
+```r
+*gapmEU21c_l2h &lt;- arrange(gapmEU21c, desc(lifeExp))
+head(gapmEU21c_l2h, 2)
+```
+
+```
+## # A tibble: 2 x 7
+##   country     continent  year lifeExp     pop gdpPercap LifeExp_month
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Iceland     Europe     2007    81.8  301931     36181           981
+## 2 Switzerland Europe     2007    81.7 7554661     37506           980
+```
+---
+##Solution 2):
+
+```r
+arrange(gapminder, pop)
+```
+
+```
+## # A tibble: 1,704 x 6
+##    country               continent  year lifeExp   pop gdpPercap
+##    &lt;fct&gt;                 &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;
+##  1 Sao Tome and Principe Africa     1952    46.5 60011       880
+##  2 Sao Tome and Principe Africa     1957    48.9 61325       861
+##  3 Djibouti              Africa     1952    34.8 63149      2670
+##  4 Sao Tome and Principe Africa     1962    51.9 65345      1072
+##  5 Sao Tome and Principe Africa     1967    54.4 70787      1385
+##  6 Djibouti              Africa     1957    37.3 71851      2865
+##  7 Sao Tome and Principe Africa     1972    56.5 76595      1533
+##  8 Sao Tome and Principe Africa     1977    58.6 86796      1738
+##  9 Djibouti              Africa     1962    39.7 89898      3021
+## 10 Sao Tome and Principe Africa     1982    60.4 98593      1890
+## # ... with 1,694 more rows
+```
+---
+
+```r
+arrange(gapminder, desc(lifeExp))
+```
+
+```
+## # A tibble: 1,704 x 6
+##    country          continent  year lifeExp       pop gdpPercap
+##    &lt;fct&gt;            &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Japan            Asia       2007    82.6 127467972     31656
+##  2 Hong Kong, China Asia       2007    82.2   6980412     39725
+##  3 Japan            Asia       2002    82.0 127065841     28605
+##  4 Iceland          Europe     2007    81.8    301931     36181
+##  5 Switzerland      Europe     2007    81.7   7554661     37506
+##  6 Hong Kong, China Asia       2002    81.5   6762476     30209
+##  7 Australia        Oceania    2007    81.2  20434176     34435
+##  8 Spain            Europe     2007    80.9  40448191     28821
+##  9 Sweden           Europe     2007    80.9   9031088     33860
+## 10 Israel           Asia       2007    80.7   6426679     25523
+## # ... with 1,694 more rows
+```
+---
+##Collapse many values down to a single summary: &lt;span style="color:blue"&gt;`summarise()`&lt;/span&gt;
+&lt;img src="summarise().png" width="450px" /&gt;
+
+- uses the same syntax as `mutate()`, but the resulting dataset consists of a single row instead of an entire new column in the case of `mutate()`. 
+
+- builds a new dataset that contains only the summarising statistics.
+
+Use `summarise()`:
+
+1) to print out a summary of gapminder containing two variables: max_lifeExp and max_gdpPercap.
+
+2) to print out a summary of gapminder containing two variables: mean_lifeExp and mean_gdpPercap.
+---
+##Solution: Summarise your data
+
+
+```r
+summarise(gapminder, max_lifeExp = max(lifeExp), max_gdpPercap = max(gdpPercap))
+```
+
+```
+## # A tibble: 1 x 2
+##   max_lifeExp max_gdpPercap
+##         &lt;dbl&gt;         &lt;dbl&gt;
+## 1        82.6        113523
+```
+
+
+```r
+summarise(gapminder, mean_lifeExp = mean(lifeExp), mean_gdpPercap = mean(gdpPercap))
+```
+
+```
+## # A tibble: 1 x 2
+##   mean_lifeExp mean_gdpPercap
+##          &lt;dbl&gt;          &lt;dbl&gt;
+## 1         59.5           7215
+```
+---
+class: inverse, center, middle
+
+## Let's `%&gt;%` all up!
+
+Confer with your neighbours.
+
+What relationship do you expect to see between population size
+(`pop`) and life expectancy (`lifeExp`)?
+---
+
+&lt;img src="pipe_short_cut.png" width="750px" style="display: block; margin: auto;" /&gt;
+---
+**Do you know what this code does?**
+
+```r
+gapminder_pipe &lt;- gapminder %&gt;%
+  filter(continent == "Europe" &amp; year ==  2007) %&gt;%
+  mutate(pop_e6 = pop / 1000000)
+plot(gapminder_pipe$pop_e6, gapminder_pipe$lifeExp, cex = 0.5, col = "red")
+```
+
+&lt;img src="Cosmo.jpg" width="250px" style="display: block; margin: auto;" /&gt;
+---
+&lt;img src="Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, center, middle
+
+##We have learnt all of Elain's moves!!! 😃🎵🎶
+
+&lt;img src="ElainDanceII.png" width="300px" /&gt;
+---
+class: inverse, center, middle
+
+## Can we make it look better? 😁
+---
+class: inverse, center, middle
+
+#"The simple graph has brought more information to the data analyst’s mind than any other device."
+John Tukey
+---
+## grammar of graphics
+Enables you to specify building blocks of a plot and to combine them to create graphical display you want. There are 8 building blocks:
+
+- data
+
+- aesthetic mapping
+
+- geometric object
+
+- statistical transformations
+
+- scales
+
+- coordinate system
+
+- position adjustments
+
+- faceting
+---
+##&lt;span style="color:blue"&gt;ggplot()&lt;/span&gt;
+1. "Initialise" a plot with `ggplot()`
+2. Add layers with `geom_` functions
+
+
+```r
+library(ggplot2)
+ggplot(gapminder_pipe, aes(x = pop_e6, y = lifeExp)) +
+  geom_point(col ="red")
+```
+
+&lt;img src="Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+**Tip**: You can use the following code template to make graphs with **ggplot2**:
+
+
+```r
+ggplot(data = &lt;DATA&gt;, (mapping = aes(&lt;MAPPINGS&gt;)) +
+  &lt;GEOM_FUNCTION&gt;()
+```
+---
+#&lt;span style="color:blue"&gt;ggplot()&lt;/span&gt; gallery
+Run the following code to see what graphs it's going to produce.
+
+
+```r
+ggplot(data = gapminder, mapping = aes(x = lifeExp), binwidth = 10) +
+  geom_histogram()
+#
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
+  geom_density()
+#
+ggplot(data = gapminder, mapping = aes(x = continent, color = continent)) +
+  geom_bar()
+#
+ggplot(data = gapminder, mapping = aes(x = continent, fill = continent)) +
+  geom_bar()
+```
+---
+##Confer with your neighbours:
+
+**Does the life expectancy depend upon the population size?**
+`$$\hat{y}=\hat{\beta_0} + \hat{\beta_1} x + e$$`
+Run this code in your console to fit the model `pop` vs `lifeExp`.
+
+Pay attention to spelling, capitalization, and
+parentheses!
+
+```r
+m1 &lt;- lm(gapminder_pipe$lifeExp ~ gapminder_pipe$pop_e6)
+summary(m1)
+```
+---
+**Can you answer the question usig the output of the fitted model?**
+
+```r
+m1 &lt;- lm(gapminder_pipe$lifeExp ~ gapminder_pipe$pop_e6)
+summary(m1)
+```
+
+```
+## 
+## Call:
+## lm(formula = gapminder_pipe$lifeExp ~ gapminder_pipe$pop_e6)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -6.324 -2.562  1.007  2.245  4.277 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           77.477421   0.721723 107.351   &lt;2e-16 ***
+## gapminder_pipe$pop_e6  0.008762   0.023779   0.368    0.715    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.025 on 28 degrees of freedom
+## Multiple R-squared:  0.004826,	Adjusted R-squared:  -0.03072 
+## F-statistic: 0.1358 on 1 and 28 DF,  p-value: 0.7153
+```
+---
+## Your turn!
+
+Use gapminder data.
+
+**Does the life expectancy depend upon the GDP per capita?**
+
+1) Have a glance at the data. (tip: `sample_n(df, n)`)
+
+2) Produce a scattep plot: what does it tell you?
+
+3) Fit a regression model: is there a relationship? How strong is it?
+Is the relationship linear? What conclusion(s) can you draw?
+
+4) What are the other questions you could ask; could you provide the answers to them?
+---
+## Possible Solution: code Q1; sample
+
+```r
+sample_n(gapminder, 30)
+```
+
+```
+## # A tibble: 30 x 6
+##    country      continent  year lifeExp        pop gdpPercap
+##    &lt;fct&gt;        &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;
+##  1 Burundi      Africa     1962    42.0    2961915       355
+##  2 Puerto Rico  Americas   1987    74.6    3444468     12281
+##  3 Venezuela    Americas   2007    73.7   26084662     11416
+##  4 Burkina Faso Africa     1967    40.7    5127935       795
+##  5 Spain        Europe     1952    64.9   28549870      3834
+##  6 Afghanistan  Asia       2002    42.1   25268405       727
+##  7 Panama       Americas   1997    73.7    2734531      7114
+##  8 China        Asia       1982    65.5 1000281000       962
+##  9 Ireland      Europe     1972    71.3    3024400      9531
+## 10 Madagascar   Africa     1967    42.9    6334556      1634
+## # ... with 20 more rows
+```
+---
+## Possible Solution: code Q2; Plot the data;
+
+```r
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point(alpha = 0.2, shape = 21, fill = "blue", colour="black", size = 5) +
+  geom_smooth(method = "lm", se = F, col = "maroon3") +
+  geom_smooth(method = "loess", se = F, col = "limegreen") 
+```
+
+&lt;img src="Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /&gt;
+---
+## Possible Solution: code Q3; simple regression model
+
+```r
+my.model &lt;- lm(gapminder_pipe$lifeExp ~ gapminder_pipe$gdpPercap)
+summary(my.model)
+```
+
+```
+## 
+## Call:
+## lm(formula = gapminder_pipe$lifeExp ~ gapminder_pipe$gdpPercap)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.79839 -1.30472  0.00807  1.33443  2.87766 
+## 
+## Coefficients:
+##                           Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)              7.227e+01  6.942e-01 104.113  &lt; 2e-16 ***
+## gapminder_pipe$gdpPercap 2.146e-04  2.514e-05   8.537  2.8e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.598 on 28 degrees of freedom
+## Multiple R-squared:  0.7225,	Adjusted R-squared:  0.7125 
+## F-statistic: 72.88 on 1 and 28 DF,  p-value: 2.795e-09
+```
+---
+## Adding layers to your &lt;span style="color:blue"&gt;`ggplot()`&lt;/span&gt;
+
+
+```r
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = "red")) +
+      geom_point(alpha = 0.2, shape = 21, fill = "blue", colour="black", size = 5) +
+  geom_smooth(method = "lm", se = F, col = "maroon3") +
+  geom_smooth(method = "loess", se = F, col = "limegreen") +
+  labs (title= "Life Exp. vs. Population Size", 
+        x = "population", y = "Life Exp.") +
+  theme(legend.position = "none", 
+        panel.border = element_rect(fill = NA, 
+                                    colour = "black",
+                                    size = .75),
+        plot.title=element_text(hjust=0.5)) +
+  geom_text(x = 80000, y = 125, label = "regression line", col = "maroon3") +
+  geom_text(x = 90000, y = 75, label = "smooth line", col = "limegreen")
+```
+---
+## Voila
+&lt;img src="Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /&gt;
+---
+## **There is a challenge:** 
+
+- `dplyr`'s `group_by()` function enables you to group your data. It allows you to create a separate df that splits the original df by a variable.
+
+- `boxplot()` function produces boxplot(s) of the given (grouped) values.
+
+Knowing about `group_by()` and `boxplot()` function, coud you compute the median life expectancy for year 2007 by continent and visualise your result?
+---
+## Possible Solution: 
+
+Let us look at the median life expectancy for each continent
+
+```r
+gapminder %&gt;%
+    group_by(continent) %&gt;%
+    summarise(lifeExp = median(lifeExp))
+```
+
+```
+## # A tibble: 5 x 2
+##   continent lifeExp
+##   &lt;fct&gt;       &lt;dbl&gt;
+## 1 Africa       47.8
+## 2 Americas     67.0
+## 3 Asia         61.8
+## 4 Europe       72.2
+## 5 Oceania      73.7
+```
+
+
+**We are lucky that we live in Serbia, ie. Europe!!!**
+---
+## Possible Solution: 
+
+```r
+# visualise the information code
+library("ggplot2")
+ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = .2) +
+  labs (title= "Life Exp. vs. Continent", 
+        x = "Continent", y = "Life Exp.") +
+  theme(legend.position = "none", 
+        panel.border = element_rect(fill = NA, 
+                                    colour = "black",
+                                    size = .75),
+        plot.title=element_text(hjust=0.5))
+```
+---
+## Possible Solution: graph
+&lt;img src="Enter_R_Workshop_Slides_files/figure-html/unnamed-chunk-53-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, center, middle
+
+##Let's do Elain's Dance!!! 😃🎵🎶
+
+&lt;img src="Elain_dance.gif" width="500px" /&gt;
+---
+## useful links: 
+
+cheatsheets:
+
+- [data-wrangling-cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+- [ggplot2-cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+websites:
+
+- [tidyverse, visualization, and manipulation basics](https://www.rstudio.com/resources/webinars/tidyverse-visualization-and-manipulation-basics/)
+
+- [ggplot part of tidy verse](http://ggplot2.tidyverse.org/index.html)
+
+- [Introduction to R graphics with ggplot2](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html#introduction)
+---
+class: inverse, center, middle
+
+#ENTER
+#R Workshop: part II
+##Tatjana Kecojevic
+##26 April 2018
+---
+#R Markdown 💻📊📈📃
+
+
+Enables you to:
+- save and execute code and display its output
+- create high quality reports that could include [LaTeX](https://www.latex-project.org/) equations
+
+[R Markdown](https://rmarkdown.rstudio.com/) documents are fully reproducable and support many static and dynamic output formts, to name a few: PDF, HTML, MS Word, Beamer... 
+
+It is a variant of [Markdown](https://daringfireball.net/projects/markdown/) that has embedded **R code chunks** (denoted by three backticks), to be used with [knitr](https://yihui.name/knitr/) to make it easy to create reproducible web-based reports. 
+
+To use **R Markdown** you will need to install package from [CRAN](https://cran.r-project.org/) and load it with:
+
+
+```r
+install.packages("rmakdown",repos = "http://cran.us.r-project.org")
+suppressPackageStartupMessages(library(rmarkdown))
+```
+---
+class: middle
+
+&lt;img src="RMarkdown.png" width="1000px" /&gt;
+
+You would deffinitely find usefull the following:
+
+- [The R Markdown Cheatsheet](https://ntaback.github.io/UofT_STA130/rmarkdown-2.0.pdf)
+
+- [The R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+---
+#Starting with RMarkdown
+
+**&lt;span style="color:red"&gt;Task 1&lt;/span&gt;:**
+Open the file `RMarkdown_Intro.Rmd`
+
+- Change the title of the Markdown Document from `My First Markdown Document` to `RMarkdown Introduction`.
+
+-  Click the **"Knit"** button to see the compiled version of your sample code.
+---
+class: inverse, center, middle
+
+##Congratulations! You’ve just Knitted your `\(1^{st}\)` Rmd document!!!! 👍😃
+
+&lt;img src="kramer_congrats.gif" width="300px" /&gt;
+---
+## Basic Text editing
+
+**&lt;span style="color:red"&gt;Task 2&lt;/span&gt;:**
+Let’s formatted this document further by
+
+- Changing the author of the document to your own name.
+
+- Rewriting the first sentence of the document to say "This is my first R Markdown document."
+
+- Recompiling the document so you can see your changes?
+---
+##Adding a link
+
+You can turn a word into a link by surrounding it in **hard brackets: [ ]** and then placing the link behind it in **parentheses: ( )**, like this:
+
+[RStudio] (www.rstudio.com)
+
+**&lt;span style="color:red"&gt;Task 3&lt;/span&gt;:**
+Make GitHub in the following paragraph link to https://github.com/TanjaKec/ENTER
+---
+#Text formatting 
+
+To embed formatting instructions into your document using Markdown, you
+would surround text by:
+- one asterisks to make it italic: *italic*;
+- two asterisks to make it bold: **bold** and
+- backticks to make it monospaced: `monospaced`.
+
+To make an ordered list you need to place each item on a new line after a
+number followed by a period followed by a space:
+1. order list
+2. item 2
+Note that you need to place a blank line between the list and any paragraphs
+that come before it.
+---
+##**&lt;span style="color:red"&gt;Task 4&lt;/span&gt;:**
+
+- Make the following paragraph in your Rmd document look like this:
+
+The variables can be one of two broad types:
+
+1) **Attribute variable**: has its outcomes described in terms of its characteristics or
+attributes;
+
+2) **Measured variable**: has the resulting outcome expressed in numerical terms.
+
+- Make word Knit in the following paragraph bold.
+---
+#Embeding the `R` code 
+To embed an R code chunk you would use three back ticks:
+
+` ```{r} `
+
+` chunk of code`
+
+` ``` `
+
+**&lt;span style="color:red"&gt;Task 5&lt;/span&gt;**: Replace the `cars` data set with the `gapminder` data set.
+
+You can also embed plots by setting `echo = FALSE` to the code chunk to
+prevent printing of the R code that generates the plot:
+
+` ```{r, echo=FALSE} `
+
+` chunk of code`
+
+` ``` `
+
+**&lt;span style="color:red"&gt;Task 6&lt;/span&gt;**: Replace the base boxplot of mpg vs. cyl by a ggplot's boxplot to examine a relationship between `continent` and `lifeExp` (remember to use some of the `dplyr` functions too!).
+---
+##Adding **LaTex** equations
+
+Finally, if you wish to add mathematical equations to your Markdown
+document you can easily embed LaTeX math equations into your report.
+
+To display equation in its own line it needs to be surrounded by double dollar
+symbol `$$` `y = a + bx` `$$`, or to embed an equation in line within the text you
+would use only one dollar symbol: `$y = a + bx$`.
+
+**&lt;span style="color:red"&gt;Task 7&lt;/span&gt;**: Display the equation into it’s own line.
+---
+class: inverse, center, middle
+
+#Congratulations! You have got the basics to start creating your own fabulous dynamic documents… !!!! 👍😃
+
+&lt;img src="giphy.gif" width="300px" /&gt;
+---
+class: inverse, center, middle
+
+#Let's Shiny with R 
+## 🌞😎🤩
+---
+##What is Shiny?
+
+**Shiny** is a package from [RStudio](https://www.rstudio.com) that can be used to build interactive web apps with `R`. 
+
+You can host standalone apps on a webpage or embed them in [R Markdown](https://rmarkdown.rstudio.com) documents or build [dashboards](http://rstudio.github.io/shinydashboard/. You can also extend your Shiny apps with [CSS themes](http://rstudio.github.io/shinythemes/), [htmlwidgets](http://www.htmlwidgets.org), and [JavaScript actions](https://github.com/daattali/shinyjs/blob/master/README.md).
+
+Shiny combines the computational power of R with the interactivity of the modern web.
+
+Shiny apps are easy to write. No web development skills are required.
+---
+##How does it work?
+&lt;img src="Shiny1.png" width="700px" style="display: block; margin: auto;" /&gt;
+---
+##There are two elements
+&lt;img src="Shiny2.png" width="700px" style="display: block; margin: auto;" /&gt;
+---
+##Template
+&lt;img src="Shiny3.png" width="700px" style="display: block; margin: auto;" /&gt;
+---
+##Run &amp; Stop
+&lt;img src="Shiny4.png" width="700px" style="display: block; margin: auto;" /&gt;
+---
+##UI: Inputs &amp; Outputs
+&lt;img src="Shiny5.png" width="700px" style="display: block; margin: auto;" /&gt;
+---
+##Structure
+&lt;img src="Shiny6.png" width="650px" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, center, middle
+##Do the Cosmo Dance?! 🤪🎵🎶
+&lt;img src="Cosmo_Dance.gif" width="500px" /&gt;
+---
+##&lt;https://tatjana.shinyapps.io/Gapminder/&gt;
+&lt;img src="Shiny7.png" width="750px" style="display: block; margin: auto;" /&gt;
+---
+##💻📊📈📃🤓🤪🤩😎
+**Useful Links**:  
+
+R Markdown:
+&lt;http://www.stat.cmu.edu/~cshalizi/rmarkdown/&gt;
+
+Shiny Cheatsheet:
+&lt;https://shiny.rstudio.com/images/shiny-cheatsheet.pdf&gt;
+
+Shiny Showcase:
+&lt;https://www.rstudio.com/products/shiny/shiny-user-showcase/&gt;
+
+Teach yourself Shiny:
+&lt;https://shiny.rstudio.com/tutorial/&gt;
+
+[RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+
+&lt;img src="SeinfeldDance.gif" width="300px" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: center, middle
+
+# Thanks!
+
+Please provide a feedback by filling the form:
+&lt;https://tatjana.shinyapps.io/ENTER_Form&gt;
+
+[www.datateka.com](www.datateka.com) 
+
+[tanjakec.github.io](tanjakec.github.io)
+
+@DataTeka 
+
+@Tatjana_Kec
+
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "atelier-lakeside-light",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
